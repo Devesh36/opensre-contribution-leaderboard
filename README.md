@@ -68,7 +68,7 @@ curl -X POST https://your-deployment.vercel.app/api/cron/refresh \
   -H "Authorization: Bearer $CRON_SECRET"
 ```
 
-Vercel Cron is configured in `vercel.json` to call `/api/cron/refresh` every six hours.
+Vercel Cron is configured in `vercel.json` to call `/api/cron/refresh` once per day (Hobby plan limit).
 
 ## Environment variables
 
