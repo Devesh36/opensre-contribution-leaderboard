@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { GIVEAWAY_DOCS_HREF } from "@/lib/giveaway/content";
 
 type AppNavLinksProps = {
   showLeaderboard?: boolean;
@@ -15,11 +16,8 @@ export function AppNavLinks({
   onNavigate,
 }: AppNavLinksProps) {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const onBenchmarks = pathname.startsWith("/benchmarks");
   const onLeaderboard = pathname === "/" || pathname.startsWith("/contributors");
-  const onGiveaway =
-    pathname === "/" && searchParams.get("view") === "winners";
   const stacked = layout === "stacked";
   const linkClass = stacked ? "doc-nav-mobile-link" : "";
 
@@ -58,9 +56,8 @@ export function AppNavLinks({
         GitHub
       </Link>
       <Link
-        href="/?view=winners"
-        className={`doc-button doc-button-compact doc-button-primary ${linkClass}${onGiveaway ? " doc-button-active" : ""}`}
-        aria-current={onGiveaway ? "page" : undefined}
+        href={GIVEAWAY_DOCS_HREF}
+        className={`doc-button doc-button-compact doc-button-primary ${linkClass}`}
         onClick={onNavigate}
       >
         Giveaway

@@ -21,6 +21,11 @@ export const metadata: Metadata = {
   title: "Contributor Leaderboard | OpenSRE",
   description:
     "Contributor activity leaderboard for Tracer-Cloud/opensre.",
+  icons: {
+    icon: [{ url: "/opensre-icon-white.svg", type: "image/svg+xml" }],
+    shortcut: "/opensre-icon-white.svg",
+    apple: "/opensre-icon-white.svg",
+  },
 };
 
 export const viewport = {

@@ -49,10 +49,13 @@ export const GIVEAWAY_RULES = [
   "Merged PRs, reviews, docs, and resolved issues all count.",
 ] as const;
 
+export const GIVEAWAY_DOCS_HREF =
+  "https://www.opensre.com/docs/bi-weekly-giveaway" as const;
+
 export const GIVEAWAY_LINKS = [
   {
     label: "Full giveaway rules",
-    href: "https://www.opensre.com/docs/bi-weekly-giveaway",
+    href: GIVEAWAY_DOCS_HREF,
   },
   {
     label: "Good first issues",
@@ -64,7 +67,7 @@ export const GIVEAWAY_LINKS = [
   },
   {
     label: "Winner announcements",
-    href: "https://www.opensre.com/docs/bi-weekly-giveaway",
+    href: GIVEAWAY_DOCS_HREF,
   },
 ] as const;
 
