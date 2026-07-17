@@ -37,7 +37,7 @@ export function ContributorSection({
 
   if (!showNewContributors) {
     return (
-      <div className="mt-6 space-y-6 sm:space-y-8 md:space-y-10">
+      <div className="content-panel mt-6 space-y-6 sm:space-y-8 md:space-y-10">
         <Podium contributors={topContributors} windowPreset={windowPreset} />
         <RankingList
           contributors={topContributors}

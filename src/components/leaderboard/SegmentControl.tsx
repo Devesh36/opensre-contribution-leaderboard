@@ -1,4 +1,6 @@
-import Link from "next/link";
+"use client";
+
+import Link, { useLinkStatus } from "next/link";
 import type { ReactNode } from "react";
 
 type SegmentControlProps = {
@@ -23,6 +25,17 @@ export function SegmentControl({
   );
 }
 
+function SegmentLinkPending() {
+  const { pending } = useLinkStatus();
+
+  return (
+    <span
+      className={`segment-link-spinner${pending ? " segment-link-spinner-active" : ""}`}
+      aria-hidden="true"
+    />
+  );
+}
+
 type SegmentLinkProps = {
   href: string;
   isActive: boolean;
@@ -34,9 +47,14 @@ export function SegmentLink({ href, isActive, children }: SegmentLinkProps) {
     <Link
       href={href}
       aria-current={isActive ? "page" : undefined}
-      className={isActive ? "segment-link segment-link-active" : "segment-link"}
+      className={
+        isActive
+          ? "segment-link segment-link-active segment-link-pending-host"
+          : "segment-link segment-link-pending-host"
+      }
     >
       {children}
+      <SegmentLinkPending />
     </Link>
   );
 }

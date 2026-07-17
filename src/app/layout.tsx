@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Geist_Mono } from "next/font/google";
+import { Suspense } from "react";
+import { NavigationProvider } from "@/components/leaderboard/NavigationProvider";
+import { SplashLoader } from "@/components/leaderboard/SplashLoader";
 import "./globals.css";
 
 const inter = Inter({
@@ -34,7 +37,13 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${geistMono.variable} h-full overflow-x-hidden antialiased`}
     >
-      <body className="min-h-full overflow-x-hidden">{children}</body>
+      <body className="splash-pending min-h-full overflow-x-hidden">
+        <SplashLoader>
+          <Suspense fallback={null}>
+            <NavigationProvider>{children}</NavigationProvider>
+          </Suspense>
+        </SplashLoader>
+      </body>
     </html>
   );
 }

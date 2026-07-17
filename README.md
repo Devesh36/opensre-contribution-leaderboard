@@ -110,6 +110,6 @@ pnpm refresh
 ## Related links
 
 - [OpenSRE docs](https://www.opensre.com/docs)
-- [Community giveaway rules](https://opensre.com/docs/bi-weekly-giveaway.md)
+- [Community giveaway rules](https://www.opensre.com/docs/bi-weekly-giveaway)
 - [Contribution guide](https://github.com/Tracer-Cloud/opensre/blob/main/CONTRIBUTING.md)
 # opensre-contribution-leaderboard

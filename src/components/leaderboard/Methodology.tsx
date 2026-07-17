@@ -6,7 +6,10 @@ type MethodologyProps = {
 
 export function Methodology({ snapshot }: MethodologyProps) {
   return (
-    <section aria-labelledby="methodology-heading" className="doc-card p-6">
+    <section
+      aria-labelledby="methodology-heading"
+      className="doc-card anim-fade-in-up anim-stagger-3 p-6"
+    >
       <p className="doc-kicker">How ranking works</p>
       <h2 id="methodology-heading" className="doc-section-title mt-3">
         Activity-based ranking

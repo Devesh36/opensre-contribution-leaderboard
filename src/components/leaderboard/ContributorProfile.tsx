@@ -50,17 +50,17 @@ export function ContributorProfile({ detail }: ContributorProfileProps) {
   const displayName = contributor.name ?? contributor.login;
 
   return (
-    <div className="anim-fade-in space-y-6 sm:space-y-8 md:space-y-10">
+    <div className="contributor-profile anim-fade-in space-y-6 sm:space-y-8 md:space-y-10">
       <Link
         href={buildLeaderboardHref({ window: detail.windowPreset })}
-        className="doc-button inline-flex"
+        className="doc-button inline-flex w-full justify-center sm:w-auto sm:justify-start"
       >
         ← Back to leaderboard
       </Link>
 
       <section className="contributor-hero doc-card p-4 sm:p-6 md:p-8">
-        <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
-          <div className="flex min-w-0 items-start gap-4 sm:gap-5">
+        <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between lg:gap-6">
+          <div className="flex min-w-0 flex-col items-start gap-3 sm:flex-row sm:gap-5">
             <Image
               src={contributor.avatarUrl}
               alt={`${contributor.login} avatar`}
@@ -68,12 +68,12 @@ export function ContributorProfile({ detail }: ContributorProfileProps) {
               height={96}
               className="contributor-hero-avatar h-16 w-16 shrink-0 rounded-full border border-[#404040] sm:h-20 sm:w-20 md:h-24 md:w-24"
             />
-            <div className="min-w-0">
+            <div className="min-w-0 w-full">
               <p className="doc-kicker">Contributor profile</p>
               <h1 className="doc-title mt-2 break-words text-2xl sm:text-3xl md:text-4xl">
                 {displayName}
               </h1>
-              <p className="doc-meta mt-2 truncate">@{contributor.login}</p>
+              <p className="doc-meta mt-2 break-all">@{contributor.login}</p>
               <div className="mt-4 flex flex-wrap gap-2">
                 <span className="contributor-badge">Rank #{contributor.rank}</span>
                 {detail.isNewContributor ? (
@@ -81,61 +81,61 @@ export function ContributorProfile({ detail }: ContributorProfileProps) {
                     New this window
                   </span>
                 ) : null}
-                <span className="contributor-badge max-w-full truncate">
+                <span className="contributor-badge break-words">
                   {detail.window.label}
                 </span>
               </div>
             </div>
           </div>
 
-          <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap">
-            <Link href={contributor.profileUrl} className="doc-button">
+          <div className="grid w-full grid-cols-1 gap-2 sm:grid-cols-2 lg:w-auto lg:grid-cols-1">
+            <Link href={contributor.profileUrl} className="doc-button justify-center">
               GitHub profile
             </Link>
             <Link
               href={`https://github.com/${detail.repository}`}
-              className="doc-button"
+              className="doc-button justify-center"
             >
               Repository
             </Link>
           </div>
         </div>
 
-        <dl className="mt-6 grid grid-cols-2 gap-3 sm:mt-8 sm:gap-4 md:grid-cols-3 xl:grid-cols-5">
+        <dl className="mt-6 grid grid-cols-1 gap-3 min-[420px]:grid-cols-2 sm:mt-8 sm:gap-4 md:grid-cols-3 xl:grid-cols-5">
           <div className="contributor-stat">
             <dt className="doc-meta">Total activity</dt>
-            <dd className="mt-2 text-2xl text-white sm:text-3xl">
+            <dd className="mt-2 text-xl text-white sm:text-2xl md:text-3xl">
               {contributor.breakdown.totalActivity}
             </dd>
           </div>
           <div className="contributor-stat">
             <dt className="doc-meta">Merged PRs</dt>
-            <dd className="mt-2 text-2xl text-white sm:text-3xl">
+            <dd className="mt-2 text-xl text-white sm:text-2xl md:text-3xl">
               {contributor.breakdown.mergedPullRequests}
             </dd>
           </div>
           <div className="contributor-stat">
             <dt className="doc-meta">Reviews</dt>
-            <dd className="mt-2 text-2xl text-white sm:text-3xl">
+            <dd className="mt-2 text-xl text-white sm:text-2xl md:text-3xl">
               {contributor.breakdown.substantiveReviews}
             </dd>
           </div>
           <div className="contributor-stat">
             <dt className="doc-meta">Linked issues</dt>
-            <dd className="mt-2 text-2xl text-white sm:text-3xl">
+            <dd className="mt-2 text-xl text-white sm:text-2xl md:text-3xl">
               {contributor.breakdown.linkedIssuesClosed}
             </dd>
           </div>
           <div className="contributor-stat">
             <dt className="doc-meta">Active days</dt>
-            <dd className="mt-2 text-2xl text-white sm:text-3xl">
+            <dd className="mt-2 text-xl text-white sm:text-2xl md:text-3xl">
               {contributor.breakdown.activeDays}
             </dd>
           </div>
         </dl>
       </section>
 
-      <div className="grid gap-6 xl:grid-cols-2">
+      <div className="grid min-w-0 gap-6 xl:grid-cols-2">
         <ActivityBreakdownChart
           mergedPullRequests={contributor.breakdown.mergedPullRequests}
           substantiveReviews={contributor.breakdown.substantiveReviews}
@@ -170,7 +170,7 @@ export function ContributorProfile({ detail }: ContributorProfileProps) {
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
           <div>
             <h2 className="doc-section-title">Merged pull requests</h2>
-            <p className="doc-meta mt-2">
+            <p className="doc-meta mt-2 break-words">
               PRs merged into {detail.repository} during this window.
             </p>
           </div>
@@ -188,13 +188,13 @@ export function ContributorProfile({ detail }: ContributorProfileProps) {
                 key={pullRequest.url}
                 className={`activity-item anim-fade-in-up ${STAGGER_CLASSES[Math.min(index, STAGGER_CLASSES.length - 1)]}`}
               >
-                <article className="doc-card doc-card-interactive p-5">
+                <article className="doc-card doc-card-interactive p-4 sm:p-5">
                   <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                     <div className="min-w-0 flex-1">
                       <p className="doc-kicker">Merged PR #{pullRequest.number}</p>
                       <Link
                         href={pullRequest.url}
-                        className="doc-link mt-2 block text-lg text-white"
+                        className="doc-link mt-2 block break-words text-base text-white sm:text-lg"
                       >
                         {pullRequest.title}
                       </Link>
@@ -248,8 +248,8 @@ export function ContributorProfile({ detail }: ContributorProfileProps) {
                 key={review.reviewUrl}
                 className={`activity-item anim-fade-in-up ${STAGGER_CLASSES[Math.min(index, STAGGER_CLASSES.length - 1)]}`}
               >
-                <article className="doc-card doc-card-interactive p-5">
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                <article className="doc-card doc-card-interactive p-4 sm:p-5">
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-2">
                         <p className="doc-kicker">
@@ -261,22 +261,25 @@ export function ContributorProfile({ detail }: ContributorProfileProps) {
                       </div>
                       <Link
                         href={review.pullRequestUrl}
-                        className="doc-link mt-2 inline-block"
+                        className="doc-link mt-2 inline-block break-words"
                       >
                         View pull request
                       </Link>
-                      <p className="doc-meta mt-2">
+                      <p className="doc-meta mt-2 break-words">
                         Submitted {formatTimestamp(review.submittedAt)} UTC
                       </p>
                       {review.body ? (
-                        <p className="mt-4 rounded-sm border border-[#262626] bg-[#0a0a0a] p-4 text-sm leading-relaxed text-[#d4d4d4]">
+                        <p className="mt-4 break-words rounded-sm border border-[#262626] bg-[#0a0a0a] p-3 text-sm leading-relaxed text-[#d4d4d4] sm:p-4">
                           {review.body.length > 280
                             ? `${review.body.slice(0, 280)}…`
                             : review.body}
                         </p>
                       ) : null}
                     </div>
-                    <Link href={review.reviewUrl} className="doc-button shrink-0">
+                    <Link
+                      href={review.reviewUrl}
+                      className="doc-button w-full shrink-0 justify-center sm:w-auto"
+                    >
                       View review
                     </Link>
                   </div>
@@ -287,7 +290,7 @@ export function ContributorProfile({ detail }: ContributorProfileProps) {
         )}
       </section>
 
-      <p className="doc-meta">
+      <p className="doc-meta break-words">
         Snapshot generated {formatTimestamp(detail.generatedAt)} UTC ·{" "}
         <Link
           href={buildContributorHref(contributor.login, detail.windowPreset)}

@@ -18,7 +18,7 @@ export function LeaderboardDashboard({
   windowPreset,
 }: LeaderboardDashboardProps) {
   return (
-    <div className="anim-fade-in space-y-6 sm:space-y-8 md:space-y-10">
+    <div className="anim-fade-in anim-stagger-6 space-y-6 sm:space-y-8 md:space-y-10">
       <CycleStatus snapshot={snapshot} />
 
       <RepositoryTotalsChart totals={snapshot.totals} />

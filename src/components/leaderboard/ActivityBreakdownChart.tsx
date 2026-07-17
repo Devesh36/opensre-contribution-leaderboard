@@ -63,7 +63,7 @@ export function ActivityBreakdownChart({
   }
 
   return (
-    <section aria-label={title} className="graph-panel doc-card p-5 sm:p-6">
+    <section aria-label={title} className="graph-panel doc-card p-4 sm:p-5 md:p-6">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
         <div>
           <h2 className="doc-section-title">{title}</h2>

@@ -9,7 +9,7 @@ type SiteNavBarProps = {
 
 export function SiteNavBar({ homeHref = "/", children }: SiteNavBarProps) {
   return (
-    <div className="doc-nav-bar sticky top-0 z-20 border-b border-[#262626] bg-[rgba(6,6,6,0.92)] backdrop-blur-md">
+    <div className="doc-nav-bar anim-slide-down sticky top-0 z-20 border-b border-[#262626] bg-[rgba(6,6,6,0.92)] backdrop-blur-md">
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-3 sm:gap-4 sm:px-6 sm:py-4">
         <Link href={homeHref} className="shrink-0">
           <Image
@@ -18,7 +18,7 @@ export function SiteNavBar({ homeHref = "/", children }: SiteNavBarProps) {
             width={120}
             height={24}
             priority
-            className="h-[18px] w-auto"
+            className="h-[22px] w-auto sm:h-6"
           />
         </Link>
         {children ? (

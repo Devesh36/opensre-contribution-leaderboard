@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { buildContributorHref } from "@/components/leaderboard/nav";
+import { useNavigation } from "@/components/leaderboard/NavigationProvider";
 import type { ContributorRecord } from "@/lib/leaderboard/types";
 import type { WindowPresetId } from "@/lib/leaderboard/window-presets";
 
@@ -97,7 +98,13 @@ export function RankingList({
   searchPlaceholder = "Search by login or display name",
 }: RankingListProps) {
   const router = useRouter();
+  const { startNavigation } = useNavigation();
   const [query, setQuery] = useState("");
+
+  const navigateToContributor = (detailHref: string) => {
+    startNavigation();
+    router.push(detailHref);
+  };
 
   const filtered = useMemo(() => {
     const normalized = query.trim().toLowerCase();
@@ -156,11 +163,11 @@ export function RankingList({
                   tabIndex={0}
                   role="link"
                   aria-label={`View contribution details for ${contributor.name ?? contributor.login}`}
-                  onClick={() => router.push(detailHref)}
+                  onClick={() => navigateToContributor(detailHref)}
                   onKeyDown={(event) => {
                     if (event.key === "Enter" || event.key === " ") {
                       event.preventDefault();
-                      router.push(detailHref);
+                      navigateToContributor(detailHref);
                     }
                   }}
                 >

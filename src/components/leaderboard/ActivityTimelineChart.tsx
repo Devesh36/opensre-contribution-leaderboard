@@ -3,6 +3,7 @@ import {
   maxDailyActivity,
   type DailyActivityBucket,
 } from "@/lib/leaderboard/chart-data";
+import type { CSSProperties } from "react";
 import type { ContributionWindow } from "@/lib/leaderboard/types";
 
 type ActivityTimelineChartProps = {
@@ -71,7 +72,7 @@ export function ActivityTimelineChart({
   }
 
   return (
-    <section aria-label={title} className="graph-panel doc-card p-5 sm:p-6">
+    <section aria-label={title} className="graph-panel doc-card p-4 sm:p-5 md:p-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h2 className="doc-section-title">{title}</h2>
@@ -91,8 +92,10 @@ export function ActivityTimelineChart({
 
       <div className="graph-timeline-scroll mt-6">
         <div
-          className="graph-timeline-grid"
-          style={{ minWidth: `${Math.max(buckets.length * 2.75, 16)}rem` }}
+          className="graph-timeline-grid graph-timeline-grid-responsive"
+          style={
+            { "--timeline-columns": buckets.length } as CSSProperties
+          }
         >
           {buckets.map((bucket, index) => (
             <TimelineBar

@@ -21,7 +21,7 @@ export function WindowSelector({
   return (
     <section
       aria-label="Time window selection"
-      className="anim-fade-in-up rounded-sm border border-[#262626] bg-gradient-to-b from-[#101010] to-[#080808] p-4 sm:p-5"
+      className="anim-fade-in-up anim-stagger-5 rounded-sm border border-[#262626] bg-gradient-to-b from-[#101010] to-[#080808] p-4 sm:p-5"
     >
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
