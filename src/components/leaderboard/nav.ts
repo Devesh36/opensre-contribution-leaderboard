@@ -3,10 +3,18 @@ import {
   type WindowPresetId,
 } from "@/lib/leaderboard/window-presets";
 
-export type ContributorView = "top" | "new";
+export type ContributorView = "top" | "new" | "winners";
 
 export function parseContributorView(value: string | undefined): ContributorView {
-  return value === "new" ? "new" : "top";
+  if (value === "new") {
+    return "new";
+  }
+
+  if (value === "winners") {
+    return "winners";
+  }
+
+  return "top";
 }
 
 export function buildLeaderboardHref(input?: {

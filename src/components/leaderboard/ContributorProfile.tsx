@@ -75,7 +75,11 @@ export function ContributorProfile({ detail }: ContributorProfileProps) {
               </h1>
               <p className="doc-meta mt-2 break-all">@{contributor.login}</p>
               <div className="mt-4 flex flex-wrap gap-2">
-                <span className="contributor-badge">Rank #{contributor.rank}</span>
+                {contributor.rank > 0 ? (
+                  <span className="contributor-badge">Rank #{contributor.rank}</span>
+                ) : (
+                  <span className="contributor-badge">Unranked this window</span>
+                )}
                 {detail.isNewContributor ? (
                   <span className="contributor-badge contributor-badge-new">
                     New this window

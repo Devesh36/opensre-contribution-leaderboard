@@ -8,6 +8,7 @@ Public contributor activity dashboard for [Tracer-Cloud/opensre](https://github.
 - Contribution window countdown and repository totals
 - New contributors section with first-time activity in the window
 - Top-three podium and searchable full ranking
+- Dedicated benchmarks page for OpenSRE evaluation suites and metrics
 - Raw activity counts per contributor (no weighted points)
 - Protected cron refresh that writes a durable JSON snapshot to Vercel Blob
 
@@ -26,6 +27,14 @@ Use the time window dropdown on the dashboard, or pass a query parameter:
 - `/?window=last-7-days`
 - `/?window=last-14-days`
 - `/?window=last-30-days`
+
+Benchmarks overview:
+
+- `/benchmarks`
+
+Bi-weekly giveaway winners (leaderboard tab):
+
+- `/?view=winners`
 
 ## Local development
 

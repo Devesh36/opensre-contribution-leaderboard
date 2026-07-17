@@ -54,11 +54,13 @@ function isSubstantiveReview(review: RawReview): boolean {
   return false;
 }
 
-function computeBreakdown(
+export function computeBreakdown(
   mergedPullRequests: RawMergedPullRequest[],
   reviews: RawReview[],
-  activeDayDates: Set<string>,
+  activeDayDates: Set<string> | string[],
 ): ContributorActivityBreakdown {
+  const activeDays =
+    activeDayDates instanceof Set ? activeDayDates.size : activeDayDates.length;
   const linkedIssuesClosed = mergedPullRequests.reduce(
     (total, pullRequest) => total + pullRequest.closingIssueNumbers.length,
     0,
@@ -68,7 +70,7 @@ function computeBreakdown(
     mergedPullRequests: mergedPullRequests.length,
     linkedIssuesClosed,
     substantiveReviews: reviews.length,
-    activeDays: activeDayDates.size,
+    activeDays,
     totalActivity:
       mergedPullRequests.length + reviews.length + linkedIssuesClosed,
   };

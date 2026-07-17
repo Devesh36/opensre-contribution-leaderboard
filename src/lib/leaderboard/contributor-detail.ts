@@ -1,4 +1,5 @@
-import { buildLeaderboardSnapshot } from "./score";
+import type { GitHubUserProfile } from "../github/client";
+import { computeBreakdown, buildLeaderboardSnapshot } from "./score";
 import type {
   ContributionWindow,
   ContributorDetailSnapshot,
@@ -102,6 +103,7 @@ export function buildContributorDetail(input: {
   window: ContributionWindow;
   activity: RawContributorActivity;
   priorContributorLogins?: Set<string>;
+  githubProfile?: GitHubUserProfile | null;
 }): ContributorDetailSnapshot | null {
   if (isBotLogin(input.login)) {
     return null;
@@ -116,16 +118,47 @@ export function buildContributorDetail(input: {
     priorContributorLogins: input.priorContributorLogins,
   });
 
-  const contributor = snapshot.contributors.find(
-    (record) => record.login.toLowerCase() === input.login.toLowerCase(),
+  const rankedContributor = snapshot.contributors.find((record) => {
+    const recordLogin = record.login.toLowerCase();
+    return (
+      recordLogin === input.login.toLowerCase() ||
+      recordLogin === input.githubProfile?.login.toLowerCase()
+    );
+  });
+
+  const canonicalLogin =
+    rankedContributor?.login ??
+    input.githubProfile?.login ??
+    input.login;
+
+  const { mergedPullRequests, reviews, activeDayDates } =
+    extractContributorItems(input.activity, input.window, canonicalLogin);
+
+  const breakdown = computeBreakdown(
+    mergedPullRequests,
+    reviews,
+    activeDayDates,
   );
+
+  const contributor = rankedContributor
+    ? {
+        ...rankedContributor,
+        breakdown,
+      }
+    : input.githubProfile
+      ? {
+          rank: 0,
+          login: input.githubProfile.login,
+          name: input.githubProfile.name,
+          avatarUrl: input.githubProfile.avatarUrl,
+          profileUrl: input.githubProfile.profileUrl,
+          breakdown,
+        }
+      : null;
 
   if (!contributor) {
     return null;
   }
-
-  const { mergedPullRequests, reviews, activeDayDates } =
-    extractContributorItems(input.activity, input.window, contributor.login);
 
   return {
     repository: input.repository,
@@ -136,6 +169,8 @@ export function buildContributorDetail(input: {
     mergedPullRequests,
     reviews,
     activeDayDates,
-    isNewContributor: !(input.priorContributorLogins?.has(contributor.login) ?? false),
+    isNewContributor: !(
+      input.priorContributorLogins?.has(contributor.login) ?? false
+    ),
   };
 }

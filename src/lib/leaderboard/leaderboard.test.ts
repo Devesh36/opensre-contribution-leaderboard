@@ -278,6 +278,33 @@ test("buildContributorDetail returns activity lists for a contributor", () => {
   assert.equal(detail?.activeDayDates.length, 1);
 });
 
+test("buildContributorDetail falls back to GitHub profile when contributor is inactive", () => {
+  const window = getCurrentWeekWindow(new Date("2026-07-15T12:00:00.000Z"));
+
+  const detail = buildContributorDetail({
+    login: "amsorrytola",
+    repository: "Tracer-Cloud/opensre",
+    generatedAt: "2026-07-15T00:00:00.000Z",
+    windowPreset: "current-week",
+    window,
+    activity: { mergedPullRequests: [], reviews: [] },
+    priorContributorLogins: new Set(),
+    githubProfile: {
+      id: 154398538,
+      login: "amsorrytola",
+      name: "MOHAMMED TALHA ANSARI",
+      avatarUrl: "https://avatars.githubusercontent.com/u/154398538?v=4",
+      profileUrl: "https://github.com/amsorrytola",
+    },
+  });
+
+  assert.ok(detail);
+  assert.equal(detail?.contributor.login, "amsorrytola");
+  assert.equal(detail?.contributor.rank, 0);
+  assert.equal(detail?.contributor.breakdown.totalActivity, 0);
+  assert.equal(detail?.mergedPullRequests.length, 0);
+});
+
 test("buildDailyActivityBuckets groups activity by UTC day", () => {
   const window = getCurrentWeekWindow(new Date("2026-07-15T12:00:00.000Z"));
 

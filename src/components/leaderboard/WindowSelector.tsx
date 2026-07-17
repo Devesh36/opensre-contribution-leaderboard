@@ -4,17 +4,19 @@ import {
   getWindowPresetOption,
   type WindowPresetId,
 } from "@/lib/leaderboard/window-presets";
-import { buildLeaderboardHref } from "./nav";
+import { buildContributorHref, buildLeaderboardHref } from "./nav";
 import { SegmentControl, SegmentLink } from "./SegmentControl";
 
 type WindowSelectorProps = {
   currentPreset: WindowPresetId;
-  currentView?: "top" | "new";
+  currentView?: "top" | "new" | "winners";
+  contributorLogin?: string;
 };
 
 export function WindowSelector({
   currentPreset,
   currentView = "top",
+  contributorLogin,
 }: WindowSelectorProps) {
   const activeOption = getWindowPresetOption(currentPreset);
 
@@ -38,10 +40,16 @@ export function WindowSelector({
         <SegmentControl aria-label="Time window presets" fullWidth>
           {WINDOW_PRESET_OPTIONS.map((option) => {
             const isActive = option.id === currentPreset;
-            const href = buildLeaderboardHref({
-              window: option.id === DEFAULT_WINDOW_PRESET ? undefined : option.id,
-              view: currentView === "top" ? undefined : currentView,
-            });
+            const href = contributorLogin
+              ? buildContributorHref(
+                  contributorLogin,
+                  option.id === DEFAULT_WINDOW_PRESET ? undefined : option.id,
+                )
+              : buildLeaderboardHref({
+                  window:
+                    option.id === DEFAULT_WINDOW_PRESET ? undefined : option.id,
+                  view: currentView === "top" ? undefined : currentView,
+                });
 
             return (
               <SegmentLink key={option.id} href={href} isActive={isActive}>

@@ -21,25 +21,7 @@ export function LeaderboardHeader({
 
   return (
     <header className="doc-nav">
-      <SiteNavBar>
-        <Link href="https://www.opensre.com/docs" className="doc-button doc-button-compact">
-          Docs
-        </Link>
-        <Link
-          href="https://github.com/Tracer-Cloud/opensre"
-          className="doc-button doc-button-compact"
-        >
-          <span className="hidden sm:inline">GitHub</span>
-          <span className="sm:hidden">GH</span>
-        </Link>
-        <Link
-          href="https://www.opensre.com/docs/bi-weekly-giveaway"
-          className="doc-button doc-button-compact doc-button-primary"
-        >
-          <span className="hidden sm:inline">Giveaway</span>
-          <span className="sm:hidden">Prize</span>
-        </Link>
-      </SiteNavBar>
+      <SiteNavBar />
 
       <div className="page-hero mx-auto max-w-5xl space-y-3 px-4 pb-6 pt-4 sm:space-y-4 sm:px-6 sm:pb-8 sm:pt-2">
         <p className="doc-kicker anim-fade-in-up anim-stagger-1">Community</p>

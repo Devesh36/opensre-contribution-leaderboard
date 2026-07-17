@@ -4,14 +4,41 @@ import { ErrorState } from "@/components/leaderboard/ErrorState";
 import { LeaderboardHeader } from "@/components/leaderboard/Header";
 import { parseContributorView } from "@/components/leaderboard/nav";
 import { WindowSelector } from "@/components/leaderboard/WindowSelector";
+import {
+  buildWinnerShareMetadata,
+  buildWinnersTabMetadata,
+} from "@/lib/giveaway/share-metadata";
 import { loadLeaderboardSnapshot } from "@/lib/leaderboard/service";
 import { parseWindowPreset } from "@/lib/leaderboard/window-presets";
+import type { Metadata } from "next";
 
 export const revalidate = 300;
 
 type HomeProps = {
-  searchParams: Promise<{ window?: string; view?: string }>;
+  searchParams: Promise<{ window?: string; view?: string; cycle?: string; winner?: string; place?: string }>;
 };
+
+export async function generateMetadata({
+  searchParams,
+}: HomeProps): Promise<Metadata> {
+  const params = await searchParams;
+
+  if (params.view === "winners") {
+    const winnerMetadata = buildWinnerShareMetadata({
+      cycle: params.cycle,
+      winner: params.winner,
+      place: params.place,
+    });
+
+    if (winnerMetadata) {
+      return winnerMetadata;
+    }
+
+    return buildWinnersTabMetadata();
+  }
+
+  return {};
+}
 
 export default async function Home({ searchParams }: HomeProps) {
   const params = await searchParams;

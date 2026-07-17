@@ -1,5 +1,9 @@
 import { unstable_cache } from "next/cache";
-import { fetchContributorActivity, resolvePriorContributorLogins } from "../github/client";
+import {
+  fetchContributorActivity,
+  fetchGitHubUserProfile,
+  resolvePriorContributorLogins,
+} from "../github/client";
 import { getBlobReadEnv, getGithubEnvOptional, getRefreshEnv } from "../env";
 import { buildContributorDetail } from "../leaderboard/contributor-detail";
 import {
@@ -54,7 +58,7 @@ function getContributorDetailCache(
 
   const cached = unstable_cache(
     () => fetchContributorDetail(login, windowPreset),
-    ["contributor-detail", login.toLowerCase(), windowPreset],
+    ["contributor-detail-v2", login.toLowerCase(), windowPreset],
     { revalidate: 300 },
   );
 
@@ -91,6 +95,8 @@ async function fetchContributorDetail(
     candidateLogins,
   });
 
+  const githubProfile = await fetchGitHubUserProfile(env.githubToken, login);
+
   return buildContributorDetail({
     login,
     repository: env.githubRepository,
@@ -99,6 +105,7 @@ async function fetchContributorDetail(
     window,
     activity,
     priorContributorLogins,
+    githubProfile,
   });
 }
 
@@ -351,7 +358,7 @@ export async function loadContributorDetail(
     if (!detail) {
       return {
         detail: null,
-        error: `No activity found for @${login} in this time window.`,
+        error: `No GitHub profile found for @${login}.`,
       };
     }
 

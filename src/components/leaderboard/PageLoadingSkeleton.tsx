@@ -1,5 +1,5 @@
 type PageLoadingSkeletonProps = {
-  variant?: "leaderboard" | "contributor";
+  variant?: "leaderboard" | "contributor" | "benchmarks" | "giveaway";
 };
 
 function SkeletonBlock({ className }: { className: string }) {
@@ -9,6 +9,44 @@ function SkeletonBlock({ className }: { className: string }) {
 export function PageLoadingSkeleton({
   variant = "leaderboard",
 }: PageLoadingSkeletonProps) {
+  if (variant === "giveaway") {
+    return (
+      <div className="loading-page space-y-6 sm:space-y-8 md:space-y-10" aria-busy="true">
+        <SkeletonBlock className="h-28 rounded-sm" />
+        <SkeletonBlock className="h-40 rounded-sm" />
+        <div className="grid gap-4 md:grid-cols-3">
+          {Array.from({ length: 3 }).map((_, index) => (
+            <SkeletonBlock key={index} className="h-44 rounded-sm" />
+          ))}
+        </div>
+        <div className="grid gap-3 sm:grid-cols-3">
+          {Array.from({ length: 3 }).map((_, index) => (
+            <SkeletonBlock key={index} className="h-28 rounded-sm" />
+          ))}
+        </div>
+        <SkeletonBlock className="h-48 rounded-sm" />
+      </div>
+    );
+  }
+
+  if (variant === "benchmarks") {
+    return (
+      <div className="loading-page space-y-6 sm:space-y-8 md:space-y-10" aria-busy="true">
+        <SkeletonBlock className="h-28 rounded-sm" />
+        <div className="grid gap-4 lg:grid-cols-2">
+          <SkeletonBlock className="h-56 rounded-sm" />
+          <SkeletonBlock className="h-56 rounded-sm" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+          {Array.from({ length: 5 }).map((_, index) => (
+            <SkeletonBlock key={index} className="h-32 rounded-sm" />
+          ))}
+        </div>
+        <SkeletonBlock className="h-40 rounded-sm" />
+      </div>
+    );
+  }
+
   if (variant === "contributor") {
     return (
       <div className="loading-page space-y-6 sm:space-y-8 md:space-y-10" aria-busy="true">

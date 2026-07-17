@@ -540,3 +540,56 @@ export async function resolvePriorContributorLogins(input: {
 
   return priorLogins;
 }
+
+export type GitHubUserProfile = {
+  id: number;
+  login: string;
+  name: string | null;
+  avatarUrl: string;
+  profileUrl: string;
+};
+
+type RestGitHubUser = {
+  id: number;
+  login: string;
+  name: string | null;
+  avatar_url: string;
+  html_url: string;
+};
+
+export async function fetchGitHubUserProfile(
+  token: string,
+  login: string,
+): Promise<GitHubUserProfile | null> {
+  const response = await fetch(
+    `https://api.github.com/users/${encodeURIComponent(login)}`,
+    {
+      headers: {
+        Accept: "application/vnd.github+json",
+        Authorization: `Bearer ${token}`,
+        "X-GitHub-Api-Version": "2022-11-28",
+      },
+      next: { revalidate: 300 },
+    },
+  );
+
+  if (response.status === 404) {
+    return null;
+  }
+
+  if (!response.ok) {
+    throw new GitHubApiError(
+      `GitHub user lookup failed with status ${response.status}`,
+    );
+  }
+
+  const data = (await response.json()) as RestGitHubUser;
+
+  return {
+    id: data.id,
+    login: data.login,
+    name: data.name,
+    avatarUrl: data.avatar_url,
+    profileUrl: data.html_url,
+  };
+}

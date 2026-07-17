@@ -1,5 +1,9 @@
 import type { ContributorRecord } from "@/lib/leaderboard/types";
 import type { WindowPresetId } from "@/lib/leaderboard/window-presets";
+import {
+  GiveawayPanel,
+  GIVEAWAY_WINNERS_COUNT,
+} from "@/components/giveaway/GiveawayPanel";
 import { buildLeaderboardHref, type ContributorView } from "./nav";
 import { NewContributors } from "./NewContributors";
 import { Podium } from "./Podium";
@@ -14,13 +18,14 @@ type ContributorSectionProps = {
   repository: string;
 };
 
-const TABS: Array<{
+const BASE_TABS: Array<{
   id: ContributorView;
   label: string;
   shortLabel: string;
 }> = [
   { id: "top", label: "Top contributors", shortLabel: "Top" },
   { id: "new", label: "New contributors", shortLabel: "New" },
+  { id: "winners", label: "Bi-weekly winners", shortLabel: "Winners" },
 ];
 
 export function ContributorSection({
@@ -31,31 +36,37 @@ export function ContributorSection({
   repository,
 }: ContributorSectionProps) {
   const showNewContributors = newContributors !== undefined;
+  const tabs = showNewContributors
+    ? BASE_TABS
+    : BASE_TABS.filter((tab) => tab.id !== "new");
+
   const resolvedView =
-    showNewContributors && activeView === "new" ? "new" : "top";
+    activeView === "winners"
+      ? "winners"
+      : showNewContributors && activeView === "new"
+        ? "new"
+        : "top";
+
   const newContributorList = newContributors ?? [];
 
-  if (!showNewContributors) {
-    return (
-      <div className="content-panel mt-6 space-y-6 sm:space-y-8 md:space-y-10">
-        <Podium contributors={topContributors} windowPreset={windowPreset} />
-        <RankingList
-          contributors={topContributors}
-          repository={repository}
-          windowPreset={windowPreset}
-        />
-      </div>
-    );
+  function tabCount(tabId: ContributorView): number {
+    switch (tabId) {
+      case "new":
+        return newContributorList.length;
+      case "winners":
+        return GIVEAWAY_WINNERS_COUNT;
+      default:
+        return topContributors.length;
+    }
   }
 
   return (
     <section aria-label="Contributor highlights" className="space-y-6 sm:space-y-8 md:space-y-10">
       <nav className="segment-nav" aria-label="Contributor views">
+        <p className="scroll-hint mb-2 sm:hidden">Swipe for more views →</p>
         <SegmentControl aria-label="Contributor views" fullWidth>
-          {TABS.map((tab) => {
+          {tabs.map((tab) => {
             const isActive = tab.id === resolvedView;
-            const count =
-              tab.id === "new" ? newContributorList.length : topContributors.length;
 
             return (
               <SegmentLink
@@ -68,14 +79,16 @@ export function ContributorSection({
               >
                 <span className="hidden sm:inline">{tab.label}</span>
                 <span className="sm:hidden">{tab.shortLabel}</span>
-                <SegmentCount>{count}</SegmentCount>
+                <SegmentCount>{tabCount(tab.id)}</SegmentCount>
               </SegmentLink>
             );
           })}
         </SegmentControl>
       </nav>
 
-      {resolvedView === "top" ? (
+      {resolvedView === "winners" ? (
+        <GiveawayPanel />
+      ) : resolvedView === "top" ? (
         <div className="content-panel space-y-6 sm:space-y-8 md:space-y-10">
           <Podium contributors={topContributors} embedded windowPreset={windowPreset} />
           <RankingList
