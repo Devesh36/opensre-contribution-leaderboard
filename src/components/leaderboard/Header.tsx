@@ -29,13 +29,15 @@ export function LeaderboardHeader({
           href="https://github.com/Tracer-Cloud/opensre"
           className="doc-button doc-button-compact"
         >
-          GitHub
+          <span className="hidden sm:inline">GitHub</span>
+          <span className="sm:hidden">GH</span>
         </Link>
         <Link
           href="https://www.opensre.com/docs/bi-weekly-giveaway"
           className="doc-button doc-button-compact doc-button-primary"
         >
-          Giveaway
+          <span className="hidden sm:inline">Giveaway</span>
+          <span className="sm:hidden">Prize</span>
         </Link>
       </SiteNavBar>
 

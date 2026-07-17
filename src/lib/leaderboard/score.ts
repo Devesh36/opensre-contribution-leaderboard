@@ -6,6 +6,8 @@ import type {
   RawContributorActivity,
   RawMergedPullRequest,
   RawReview,
+  RepositoryActivityDetail,
+  RepositoryLinkedIssue,
   RepositoryTotals,
 } from "./types";
 import type { ContributionWindow } from "./types";
@@ -167,6 +169,8 @@ export function buildLeaderboardSnapshot(input: {
 
   let mergedPullRequestsInWindow = 0;
   let linkedIssuesClosedInWindow = 0;
+  const repositoryMergedPullRequests: RawMergedPullRequest[] = [];
+  const repositoryLinkedIssues: RepositoryLinkedIssue[] = [];
 
   for (const pullRequest of input.activity.mergedPullRequests) {
     if (!isWithinWindow(pullRequest.mergedAt, input.window)) {
@@ -176,6 +180,17 @@ export function buildLeaderboardSnapshot(input: {
     if (!isBotLogin(pullRequest.authorLogin)) {
       mergedPullRequestsInWindow += 1;
       linkedIssuesClosedInWindow += pullRequest.closingIssueNumbers.length;
+      repositoryMergedPullRequests.push(pullRequest);
+
+      for (const issueNumber of pullRequest.closingIssueNumbers) {
+        repositoryLinkedIssues.push({
+          issueNumber,
+          pullRequestNumber: pullRequest.number,
+          pullRequestTitle: pullRequest.title,
+          pullRequestUrl: pullRequest.url,
+          authorLogin: pullRequest.authorLogin,
+        });
+      }
     }
 
     const contributor = ensureContributor(
@@ -256,6 +271,30 @@ export function buildLeaderboardSnapshot(input: {
     activeContributors: contributorRecords.length,
   };
 
+  const repositoryReviews = Array.from(latestReviewByPullRequest.values()).sort(
+    (left, right) =>
+      new Date(right.submittedAt).getTime() - new Date(left.submittedAt).getTime(),
+  );
+
+  repositoryMergedPullRequests.sort(
+    (left, right) =>
+      new Date(right.mergedAt).getTime() - new Date(left.mergedAt).getTime(),
+  );
+
+  repositoryLinkedIssues.sort((left, right) => {
+    if (right.issueNumber !== left.issueNumber) {
+      return right.issueNumber - left.issueNumber;
+    }
+
+    return right.pullRequestNumber - left.pullRequestNumber;
+  });
+
+  const activityDetail: RepositoryActivityDetail = {
+    mergedPullRequests: repositoryMergedPullRequests,
+    reviews: repositoryReviews,
+    linkedIssues: repositoryLinkedIssues,
+  };
+
   const priorLogins = input.priorContributorLogins ?? new Set<string>();
   const newContributors = contributorRecords
     .filter((contributor) => !priorLogins.has(contributor.login))
@@ -271,6 +310,7 @@ export function buildLeaderboardSnapshot(input: {
     windowPreset: input.windowPreset,
     window: input.window,
     totals,
+    activityDetail,
     contributors: contributorRecords,
     newContributors,
     methodology: {

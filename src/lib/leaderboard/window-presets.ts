@@ -15,6 +15,7 @@ export type WindowPresetId =
 export type WindowPresetOption = {
   id: WindowPresetId;
   label: string;
+  shortLabel: string;
   description: string;
 };
 
@@ -22,26 +23,31 @@ export const WINDOW_PRESET_OPTIONS: WindowPresetOption[] = [
   {
     id: "current-week",
     label: "Current week",
+    shortLabel: "Week",
     description: "Monday through Sunday UTC",
   },
   {
     id: "last-week",
     label: "Last week",
+    shortLabel: "Last wk",
     description: "Previous Monday through Sunday UTC",
   },
   {
     id: "last-7-days",
     label: "Last 7 days",
+    shortLabel: "7d",
     description: "Rolling seven-day window ending now",
   },
   {
     id: "last-14-days",
     label: "Last 14 days",
+    shortLabel: "14d",
     description: "Rolling two-week window ending now",
   },
   {
     id: "last-30-days",
     label: "Last 30 days",
+    shortLabel: "30d",
     description: "Rolling thirty-day window ending now",
   },
 ];

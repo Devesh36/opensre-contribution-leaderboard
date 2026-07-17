@@ -127,7 +127,7 @@ export function Podium({
         <p className="doc-meta">{subtitle}</p>
       </div>
 
-      <div className="grid gap-4 md:hidden">
+      <div className="interaction-group grid gap-4 md:hidden">
         {topThree.map((contributor, rankIndex) => (
           <PodiumCard
             key={contributor.login}
@@ -139,7 +139,7 @@ export function Podium({
         ))}
       </div>
 
-      <div className="hidden gap-4 md:grid md:grid-cols-3">
+      <div className="interaction-group hidden gap-4 md:grid md:grid-cols-3">
         {desktopOrdered.map((contributor, index) => {
           const rankIndex =
             topThree.length === 3

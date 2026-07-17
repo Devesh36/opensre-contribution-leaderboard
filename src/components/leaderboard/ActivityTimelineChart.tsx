@@ -90,7 +90,10 @@ export function ActivityTimelineChart({
         </div>
       </div>
 
-      <div className="graph-timeline-scroll mt-6">
+      <div className="graph-timeline-scroll mt-4 sm:mt-6">
+        {window.days > 7 ? (
+          <p className="scroll-hint doc-meta mb-3 lg:hidden">Swipe to see all days →</p>
+        ) : null}
         <div
           className="graph-timeline-grid graph-timeline-grid-responsive"
           style={

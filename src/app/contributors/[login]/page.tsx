@@ -49,7 +49,7 @@ export default async function ContributorPage({
         </SiteNavBar>
       </header>
 
-      <main className="page-main contributor-page-main mx-auto max-w-5xl space-y-6 px-4 py-6 sm:space-y-8 sm:px-6 sm:py-8 md:space-y-10 md:py-10">
+      <main className="page-main contributor-page-main mx-auto max-w-5xl space-y-6 py-6 sm:space-y-8 sm:py-8 md:space-y-10 md:py-10">
         {result.error && !result.detail ? (
           <ErrorState message={result.error} />
         ) : null}

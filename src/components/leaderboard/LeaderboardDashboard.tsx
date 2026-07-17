@@ -21,7 +21,13 @@ export function LeaderboardDashboard({
     <div className="anim-fade-in anim-stagger-6 space-y-6 sm:space-y-8 md:space-y-10">
       <CycleStatus snapshot={snapshot} />
 
-      <RepositoryTotalsChart totals={snapshot.totals} />
+      <RepositoryTotalsChart
+        totals={snapshot.totals}
+        activityDetail={snapshot.activityDetail}
+        contributors={snapshot.contributors}
+        repository={snapshot.repository}
+        windowPreset={windowPreset}
+      />
 
       <ContributorSection
         activeView={activeView}

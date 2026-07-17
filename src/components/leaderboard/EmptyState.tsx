@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export function EmptyState() {
   return (
-    <section className="doc-callout p-8 text-center">
+    <section className="doc-callout p-4 text-center sm:p-8">
       <h2 className="doc-section-title">Leaderboard not ready</h2>
       <p className="mx-auto mt-3 max-w-2xl leading-relaxed text-[#d4d4d4]">
         Add <code className="rounded-sm border border-[#404040] bg-[#262626] px-1.5 py-0.5 text-[13px] text-white">GITHUB_TOKEN</code>{" "}

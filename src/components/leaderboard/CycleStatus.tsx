@@ -21,7 +21,7 @@ export function CycleStatus({ snapshot }: CycleStatusProps) {
   );
 
   return (
-    <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+    <section className="interaction-group grid gap-4 md:grid-cols-2 xl:grid-cols-4">
       <article className="doc-card doc-card-interactive anim-fade-in-up anim-stagger-1 p-5">
         <p className="doc-kicker">Current window</p>
         <p className="mt-3 break-words text-base text-white sm:text-lg">{snapshot.window.label}</p>

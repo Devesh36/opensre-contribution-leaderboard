@@ -124,6 +124,10 @@ test("buildLeaderboardSnapshot ranks by total activity", () => {
   assert.equal(snapshot.contributors[0]?.breakdown.totalActivity, 3);
   assert.equal(snapshot.contributors[1]?.login, "bob");
   assert.equal(snapshot.newContributors?.length, 2);
+  assert.equal(snapshot.activityDetail?.mergedPullRequests.length, 2);
+  assert.equal(snapshot.activityDetail?.reviews.length, 1);
+  assert.equal(snapshot.activityDetail?.linkedIssues.length, 1);
+  assert.equal(snapshot.activityDetail?.linkedIssues[0]?.issueNumber, 42);
   assert.equal(toActiveDayDate("2026-07-14T23:59:59.000Z"), "2026-07-14");
 });
 

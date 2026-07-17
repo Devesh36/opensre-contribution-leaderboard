@@ -131,12 +131,12 @@ export function RankingList({
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder={searchPlaceholder}
-            className="w-full rounded-sm border border-[#404040] bg-[#0a0a0a] px-4 py-2 text-white outline-none focus:border-[#737373]"
+            className="doc-input w-full rounded-sm border border-[#404040] bg-[#0a0a0a] px-4 py-2 text-white outline-none focus:border-[#737373]"
           />
         </label>
       </div>
 
-      <div className="hidden overflow-x-auto rounded-sm border border-[#262626] md:block">
+      <div className="hidden overflow-x-auto rounded-sm border border-[#262626] lg:block">
         <table className="doc-table doc-table-ranking min-w-[42rem] text-left text-sm">
           <thead>
             <tr>
@@ -149,7 +149,7 @@ export function RankingList({
               <th scope="col">Active days</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="interaction-group">
             {filtered.map((contributor) => {
               const detailHref = buildContributorHref(
                 contributor.login,
@@ -211,7 +211,7 @@ export function RankingList({
         </table>
       </div>
 
-      <div className="space-y-4 md:hidden">
+      <div className="interaction-group space-y-4 lg:hidden">
         {filtered.map((contributor) => {
           const detailHref = buildContributorHref(
             contributor.login,

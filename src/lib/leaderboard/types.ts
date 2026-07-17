@@ -31,6 +31,20 @@ export type RepositoryTotals = {
   activeContributors: number;
 };
 
+export type RepositoryLinkedIssue = {
+  issueNumber: number;
+  pullRequestNumber: number;
+  pullRequestTitle: string;
+  pullRequestUrl: string;
+  authorLogin: string | null;
+};
+
+export type RepositoryActivityDetail = {
+  mergedPullRequests: RawMergedPullRequest[];
+  reviews: RawReview[];
+  linkedIssues: RepositoryLinkedIssue[];
+};
+
 export type LeaderboardSnapshot = {
   version: 2;
   generatedAt: string;
@@ -38,6 +52,7 @@ export type LeaderboardSnapshot = {
   windowPreset?: WindowPresetId;
   window: ContributionWindow;
   totals: RepositoryTotals;
+  activityDetail?: RepositoryActivityDetail;
   contributors: ContributorRecord[];
   newContributors?: ContributorRecord[];
   methodology: {

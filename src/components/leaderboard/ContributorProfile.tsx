@@ -101,7 +101,7 @@ export function ContributorProfile({ detail }: ContributorProfileProps) {
           </div>
         </div>
 
-        <dl className="mt-6 grid grid-cols-1 gap-3 min-[420px]:grid-cols-2 sm:mt-8 sm:gap-4 md:grid-cols-3 xl:grid-cols-5">
+        <dl className="interaction-group mt-6 grid grid-cols-1 gap-3 min-[420px]:grid-cols-2 sm:mt-8 sm:gap-4 md:grid-cols-3 xl:grid-cols-5">
           <div className="contributor-stat">
             <dt className="doc-meta">Total activity</dt>
             <dd className="mt-2 text-xl text-white sm:text-2xl md:text-3xl">
@@ -156,7 +156,7 @@ export function ContributorProfile({ detail }: ContributorProfileProps) {
               UTC days with at least one merged PR or substantive review.
             </p>
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div className="interaction-group flex flex-wrap gap-2">
             {activeDayDates.map((day) => (
               <span key={day} className="contributor-day">
                 {formatDay(day)}
@@ -182,7 +182,7 @@ export function ContributorProfile({ detail }: ContributorProfileProps) {
             No merged pull requests in this window.
           </p>
         ) : (
-          <ul className="space-y-3">
+          <ul className="interaction-group space-y-3">
             {mergedPullRequests.map((pullRequest, index) => (
               <li
                 key={pullRequest.url}
@@ -242,7 +242,7 @@ export function ContributorProfile({ detail }: ContributorProfileProps) {
             No substantive reviews in this window.
           </p>
         ) : (
-          <ul className="space-y-3">
+          <ul className="interaction-group space-y-3">
             {reviews.map((review, index) => (
               <li
                 key={review.reviewUrl}
